@@ -24,7 +24,7 @@ public class Client {
 
     @Column(name="birthday")
     private Date birthday;
-    
+
     @JsonIgnoreProperties("client")
     @OneToMany(mappedBy = "client", orphanRemoval = true)
     private Set<Card> cards = new HashSet<>();

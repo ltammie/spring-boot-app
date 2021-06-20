@@ -44,4 +44,19 @@ public class CardServiceImpl implements CardService {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Card getByCardNumber(Long cardNumber) {
+        return repository.findByCardNumber(cardNumber);
+    }
+
+    @Override
+    @Transactional
+    public Card updateBalanceByCardNumber(Long cardNumber, Long balance) {
+        Card tmp = repository.findByCardNumber(cardNumber);
+        tmp.setBalance(balance);
+        return repository.save(tmp);
+    }
+
 }

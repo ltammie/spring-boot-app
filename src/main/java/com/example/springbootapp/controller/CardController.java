@@ -39,4 +39,17 @@ public class CardController {
     public void deleteCardById(@PathVariable Long id) {
         service.deleteById(id);
     }
+
+    /*
+    Баланс карты по номеру
+     */
+    @GetMapping("/balance/{card-number}")
+    public Long getBalance(@PathVariable("card-number") Long cardNumber) {
+        return service.getByCardNumber(cardNumber).getBalance();
+    }
+
+    @PutMapping("/balance")
+    public Card updateBalance(@RequestBody Card card) {
+        return service.updateBalanceByCardNumber(card.getCardNumber(), card.getBalance());
+    }
 }

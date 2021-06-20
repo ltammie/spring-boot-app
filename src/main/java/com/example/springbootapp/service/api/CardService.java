@@ -11,4 +11,6 @@ public interface CardService {
     Card create(Card card);
     Card update(Card card);
     void deleteById(Long id);
+    Card getByCardNumber(Long cardNumber);
+    Card updateBalanceByCardNumber(Long cardNumber, Long balance);
 }
