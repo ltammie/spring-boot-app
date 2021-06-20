@@ -1,29 +1,43 @@
 package com.example.springbootapp.controller;
 
 import com.example.springbootapp.model.Client;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.springbootapp.service.api.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/client-management")
 public class ClientController {
-
-    @GetMapping("/health")
-    public String health() {
-        return "App is running!";
-    }
+    @Autowired
+    private ClientService service;
 
     @GetMapping("/clients")
     public List<Client> getAll() {
-        return null;
+        return service.getAll();
     }
 
     @GetMapping("/clients/{id}")
     public Client getById(@PathVariable("id") Long id) {
-        return new Client();
+        return service.getById(id).orElseThrow(() -> new ExpressionException("No client"));
     }
+
+    @PostMapping("/clients")
+    public Client addClient(@RequestBody Client client) {
+        return service.create(client);
+    }
+
+    @PutMapping("/clients")
+    public Client updateClient(@RequestBody Client client) {
+        return service.update(client);
+    }
+
+    @DeleteMapping("/clients/{id}")
+    public void deleteClientById(@PathVariable("id") Long id) {
+        service.deleteById(id);
+    }
+
+
 }
