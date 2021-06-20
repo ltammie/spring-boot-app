@@ -54,9 +54,9 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public Card updateBalanceByCardNumber(Long cardNumber, Long balance) {
-        Card tmp = repository.findByCardNumber(cardNumber);
-        tmp.setBalance(balance);
-        return repository.save(tmp);
+        Card card = repository.findByCardNumber(cardNumber);
+        card.setBalance(balance);
+        return repository.save(card);
     }
 
 }

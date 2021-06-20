@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "cards")
 public class Card {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="card_id")
@@ -24,6 +24,10 @@ public class Card {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
+
+    @JsonIgnoreProperties("card")
+    @OneToMany(mappedBy = "card", orphanRemoval = true)
+    private Set<Transaction> transactions = new HashSet<>();
 
     public Card() {
     }
