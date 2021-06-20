@@ -1,5 +1,7 @@
 package com.example.springbootapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -10,10 +12,9 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="client_id")
+    private Long clientId;
 
     @Column(name="name")
     private String name;
@@ -23,27 +24,26 @@ public class Client {
 
     @Column(name="birthday")
     private Date birthday;
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    
+    @JsonIgnoreProperties("client")
+    @OneToMany(mappedBy = "client", orphanRemoval = true)
     private Set<Card> cards = new HashSet<>();
 
     public Client() {
     }
 
-    public Client(Long id, String name, String surname, Date birthday, Set<Card> cards) {
-        this.id = id;
+    public Client(String name, String surname, Date birthday) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
-        this.cards = cards;
     }
 
-    public Long getId() {
-        return id;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public String getName() {
@@ -81,11 +81,10 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
+                "clientId=" + clientId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", birthday=" + birthday +
-                ", cards=" + cards +
                 '}';
     }
 }

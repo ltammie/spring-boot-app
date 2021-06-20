@@ -3,6 +3,7 @@ package com.example.springbootapp.controller;
 import com.example.springbootapp.model.Card;
 import com.example.springbootapp.service.api.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,17 +16,17 @@ public class CardController {
 
     @GetMapping("/cards")
     public List<Card> getAll() {
-        return null;
+        return service.getAll();
     }
 
     @GetMapping("/cards/{id}")
     public Card getById(@PathVariable("id") Long id) {
-        return new Card();
+        return service.getById(id).orElseThrow(() -> new ExpressionException("No client"));
     }
 
     @PostMapping("/cards")
     public Card addCard(@RequestBody Card card) {
-        System.out.println(card);
+         System.out.println(card);
         return service.create(card);
     }
 

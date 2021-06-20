@@ -1,5 +1,8 @@
 package com.example.springbootapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,10 +10,9 @@ import javax.persistence.*;
 public class Card {
 
     @Id
-    @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="card_id")
+    private Long cardId;
 
     @Column(name="card_number")
     private Long cardNumber;
@@ -18,26 +20,26 @@ public class Card {
     @Column(name="balance")
     private Long balance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @JsonIgnoreProperties("cards")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="client_id")
     private Client client;
 
     public Card() {
     }
 
-    public Card(Long id, Long cardNumber, Long balance, Client client) {
-        this.id = id;
+    public Card(Long cardNumber, Long balance, Client client) {
         this.cardNumber = cardNumber;
         this.balance = balance;
         this.client = client;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCardId() {
+        return cardId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
     }
 
     public Long getCardNumber() {
@@ -67,10 +69,9 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "id=" + id +
+                "cardId=" + cardId +
                 ", cardNumber=" + cardNumber +
                 ", balance=" + balance +
-                ", client=" + client +
                 '}';
     }
 }
