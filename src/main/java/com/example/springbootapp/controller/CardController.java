@@ -12,44 +12,54 @@ import java.util.List;
 @RequestMapping("/card-management")
 public class CardController {
     @Autowired
-    private CardService service;
+    private CardService cardService;
 
     @GetMapping("/cards")
     public List<Card> getAll() {
-        return service.getAll();
+        return cardService.getAll();
     }
 
     @GetMapping("/cards/{id}")
     public Card getById(@PathVariable("id") Long id) {
-        return service.getById(id).orElseThrow(() -> new ExpressionException("No client"));
+        return cardService.getById(id).orElseThrow(() -> new ExpressionException("No client"));
     }
 
     @PostMapping("/cards")
     public Card addCard(@RequestBody Card card) {
          System.out.println(card);
-        return service.create(card);
+        return cardService.create(card);
     }
 
     @PutMapping("/cards")
     public Card updateCard(@RequestBody Card card) {
-        return service.update(card);
+        return cardService.update(card);
     }
 
     @DeleteMapping("/cards/{id}")
-    public void deleteCardById(@PathVariable Long id) {
-        service.deleteById(id);
+    public void deleteCardById(@PathVariable("id") Long id) {
+        cardService.deleteById(id);
     }
 
     /*
     Баланс карты по номеру
      */
-    @GetMapping("/balance/{card-number}")
-    public Long getBalance(@PathVariable("card-number") Long cardNumber) {
-        return service.getByCardNumber(cardNumber).getBalance();
+    @GetMapping("/balance")
+    public Long getBalance(@RequestParam Long cardNumber) {
+        return cardService.getByCardNumber(cardNumber).getBalance();
     }
 
+    /*
+    Пополнение баланса по номеру
+     */
     @PutMapping("/balance")
     public Card updateBalance(@RequestBody Card card) {
-        return service.updateBalanceByCardNumber(card.getCardNumber(), card.getBalance());
+        return cardService.updateBalanceByCardNumber(card.getCardNumber(), card.getBalance());
+    }
+
+    @GetMapping("/transaction/info")
+    public List<String> getTransactionInfo(@RequestParam Long sender, @RequestParam Long recipient) {
+        System.out.println("s: " + sender);
+        System.out.println("r: " + recipient);
+        return cardService.getTransactionInfo(sender, recipient);
     }
 }

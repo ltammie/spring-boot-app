@@ -13,4 +13,5 @@ public interface CardService {
     void deleteById(Long id);
     Card getByCardNumber(Long cardNumber);
     Card updateBalanceByCardNumber(Long cardNumber, Long balance);
+    List<String> getTransactionInfo(Long sender, Long recipient);
 }

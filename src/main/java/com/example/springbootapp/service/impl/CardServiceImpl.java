@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +59,16 @@ public class CardServiceImpl implements CardService {
         Card card = repository.findByCardNumber(cardNumber);
         card.setBalance(balance);
         return repository.save(card);
+    }
+
+    @Override
+    public List<String> getTransactionInfo(Long sender, Long recipient) {
+        Card senderCard = repository.findByCardNumber(sender);
+        Card recipientCard = repository.findByCardNumber(recipient);
+        List<String> info = new ArrayList<>();
+        info.add(senderCard.getClient().getName() + " " + senderCard.getClient().getSurname());
+        info.add(recipientCard.getClient().getName() + " " + recipientCard.getClient().getSurname());
+        return info;
     }
 
 }
