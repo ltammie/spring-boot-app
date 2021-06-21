@@ -20,7 +20,7 @@ public class Transaction {
     private Long toCard;
 
     @Column(name = "amount")
-    private Float amount;
+    private Long amount;
 
     @Column(name = "date")
     private Date date;
@@ -33,7 +33,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long fromCard, Long toCard, Float amount, Date date, Card card) {
+    public Transaction(Long fromCard, Long toCard, Long amount, Date date, Card card) {
         this.fromCard = fromCard;
         this.toCard = toCard;
         this.amount = amount;
@@ -65,11 +65,11 @@ public class Transaction {
         this.toCard = toCard;
     }
 
-    public Float getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 

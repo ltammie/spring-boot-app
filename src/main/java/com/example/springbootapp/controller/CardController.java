@@ -26,7 +26,6 @@ public class CardController {
 
     @PostMapping("/cards")
     public Card addCard(@RequestBody Card card) {
-         System.out.println(card);
         return cardService.create(card);
     }
 
@@ -56,10 +55,16 @@ public class CardController {
         return cardService.updateBalanceByCardNumber(card.getCardNumber(), card.getBalance());
     }
 
+    /*
+    Получение фио отправителя и получателя
+     */
     @GetMapping("/transaction/info")
     public List<String> getTransactionInfo(@RequestParam Long sender, @RequestParam Long recipient) {
-        System.out.println("s: " + sender);
-        System.out.println("r: " + recipient);
         return cardService.getTransactionInfo(sender, recipient);
+    }
+
+    @PostMapping("/transaction/execute")
+    public Boolean executeTransaction(@RequestParam Long sender, @RequestParam Long recipient, @RequestParam Long amount) {
+        return cardService.executeTransaction(sender, recipient, amount);
     }
 }

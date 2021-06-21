@@ -14,4 +14,5 @@ public interface CardService {
     Card getByCardNumber(Long cardNumber);
     Card updateBalanceByCardNumber(Long cardNumber, Long balance);
     List<String> getTransactionInfo(Long sender, Long recipient);
+    Boolean executeTransaction(Long sender, Long recipient, Long amount);
 }
