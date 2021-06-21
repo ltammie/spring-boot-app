@@ -7,6 +7,7 @@ import org.springframework.expression.ExpressionException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/card-management")
@@ -59,7 +60,7 @@ public class CardController {
     Получение фио отправителя и получателя
      */
     @GetMapping("/transaction/info")
-    public List<String> getTransactionInfo(@RequestParam Long sender, @RequestParam Long recipient) {
+    public Map<String, String> getTransactionInfo(@RequestParam Long sender, @RequestParam Long recipient) {
         return cardService.getTransactionInfo(sender, recipient);
     }
 

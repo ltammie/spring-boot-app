@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "transactions")
@@ -23,7 +24,7 @@ public class Transaction {
     private Long amount;
 
     @Column(name = "date")
-    private Date date;
+    private OffsetDateTime date;
 
     @JsonIgnoreProperties("transactions")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,7 +34,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long fromCard, Long toCard, Long amount, Date date, Card card) {
+    public Transaction(Long fromCard, Long toCard, Long amount, OffsetDateTime date, Card card) {
         this.fromCard = fromCard;
         this.toCard = toCard;
         this.amount = amount;
@@ -73,11 +74,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(OffsetDateTime date) {
         this.date = date;
     }
 

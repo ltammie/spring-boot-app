@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.OffsetDateTime;
+import java.util.*;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -68,12 +67,12 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public List<String> getTransactionInfo(Long sender, Long recipient) {
+    public Map<String, String> getTransactionInfo(Long sender, Long recipient) {
         Card senderCard = cardRepository.findByCardNumber(sender);
         Card recipientCard = cardRepository.findByCardNumber(recipient);
-        List<String> info = new ArrayList<>();
-        info.add(senderCard.getClient().getName() + " " + senderCard.getClient().getSurname());
-        info.add(recipientCard.getClient().getName() + " " + recipientCard.getClient().getSurname());
+        Map<String, String> info = new HashMap<>();
+        info.put("sender", senderCard.getClient().getName() + " " + senderCard.getClient().getSurname());
+        info.put("recipient", recipientCard.getClient().getName() + " " + recipientCard.getClient().getSurname());
         return info;
     }
 
@@ -94,14 +93,14 @@ public class CardServiceImpl implements CardService {
                 senderInDB.getCardNumber(),
                 recipientInDB.getCardNumber(),
                 -amount,
-                date,
+                OffsetDateTime.now(),
                 senderInDB
                 );
         Transaction rTransaction = new Transaction(
                 recipientInDB.getCardNumber(),
                 senderInDB.getCardNumber(),
                 amount,
-                date,
+                OffsetDateTime.now(),
                 recipientInDB
         );
         transactionRepository.save(sTransaction);
