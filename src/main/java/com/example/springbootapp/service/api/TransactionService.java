@@ -11,4 +11,6 @@ public interface TransactionService {
     Transaction create(Transaction transaction);
     Transaction update(Transaction transaction);
     void deleteById(Long id);
+    List<Transaction> getAllByRecipientCard(Long recipient);
+
 }
